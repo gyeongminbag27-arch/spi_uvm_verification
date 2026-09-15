@@ -1,6 +1,6 @@
 # SPI UVM Verification
 
-**SystemVerilog와 UVM 1.2를 이용한 SPI Master–Slave 양방향 데이터 검증 프로젝트**입니다. Directed·Constrained Random 자극을 생성하고, Scoreboard에서 송수신 데이터를 비교하며 Functional Coverage를 수집하도록 구성했습니다.
+
 
 ## 프로젝트 개요
 
@@ -14,7 +14,7 @@
 | 기본 Seed | 1234 |
 | 비교 기준 | Master RX = Slave TX, Slave RX = Master TX |
 
-위 건수는 현재 시퀀스에 설정된 실행 계획입니다. 제공된 파일에는 PASS/FAIL 요약 로그와 Coverage 보고서가 없어 **통과 건수나 Coverage 달성률은 기재하지 않았습니다.**
+
 
 ## 검증 환경
 
@@ -118,14 +118,6 @@ set -o pipefail
 make sim TEST=spi_test SEED=1234 2>&1 | tee run_spi_test_1234.log
 ```
 
-확인할 항목은 `SEQUENCE SUMMARY`, `SPI RESULT`, UVM_ERROR·UVM_FATAL 집계, `SPI_COV` 출력입니다. 문서 정리 과정에서 VCS 시뮬레이션을 새로 실행하지는 않았습니다.
 
-## 보드용 설계
 
-Basys3 (`xc7a35tcpg236-1`)에서 Master는 스위치 데이터와 시작 버튼을 입력받고, Slave는 수신 바이트를 FND에 표시합니다. Master Top은 Mode 0과 분주값 255, Slave Top은 응답 바이트 0x3C로 설정되어 있습니다.
 
-Master·Slave 각각의 RTL 폴더와 대응 XDC를 별도 Vivado 프로젝트에 추가하고 Top을 `top_spi`, `top_spi_slave`로 지정합니다. 보드 버전의 동작 결과를 UVM DUT의 결과와 동일하게 취급하지 않습니다.
-
-## 검토 상태
-
-업로드용 정리에서는 원본 RTL·UVM 소스·Makefile을 유지하고, 중복 테스트벤치·템플릿·Vivado 캐시·Verdi 실행 산출물을 제외했습니다. 재실행 전 확인할 코드와 환경 사항은 [검토 메모](docs/review_notes.md)에 정리했습니다.
